@@ -58,7 +58,7 @@ def preprocess_mask(clabels=None, instlabels=None, ignore=None, remove_overlap=T
     return labels#.astype(np.int32)
 
 # Cell
-def create_pdf(labels, ignore=None, fbr=.1, scale=448):
+def create_pdf(labels, ignore=None, fbr=.1, scale=512):
     'Creates a cumulated probability density function (PDF) for weighted sampling '
 
     pdf = (labels[:] > 0) + (labels[:] == 0) * fbr
@@ -75,7 +75,7 @@ def create_pdf(labels, ignore=None, fbr=.1, scale=448):
     return np.cumsum(pdf/np.sum(pdf))
 
 # Cell
-def random_center(pdf, orig_shape, scale=448):
+def random_center(pdf, orig_shape, scale=512):
     'Sample random center using PDF'
     scale_y = int((orig_shape[1]/orig_shape[0])*scale)
     cx, cy = np.unravel_index(np.argmax(pdf > np.random.random()), (scale,scale_y))
